@@ -20,10 +20,8 @@ const transport = {
 const emailSender = '" Test Email <youngboy@nba.com>';
 const emailRecipient = 'xxxxxxxxxxxxxxxxxxxxxxxxxx@gmail.com';
 
-if (!selectedArtists.length) {
-    console.log('No artist(s) were entered.');
-}
-else {
+if (selectedArtists.length) {
+
     getRankerHTML()
         .then(HTML => getSongsForArtists(HTML, chartLimit, selectedArtists))
         .then(songs => {
@@ -44,9 +42,12 @@ else {
         })
         .catch(e => console.log('Error', e));
 }
+else {
+    console.log('No artist(s) were entered.');
+}
 
 async function getRankerHTML() {
-    requestPromise = util.promisify(request);
+    let requestPromise = util.promisify(request);
     try {
         let data = await requestPromise('https://www.ranker.com/list/best-rap-songs-2019/ranker-music');
         if (data.statusCode === 200) {
